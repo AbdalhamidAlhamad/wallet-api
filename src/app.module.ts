@@ -6,6 +6,8 @@ import { LoggerModule } from 'nestjs-pino';
 import { buildConfigOptions, buildLoggerOptions, buildTypeormOptions } from './core/module-options';
 import { buildValidationPipe } from './core/pipes';
 import { migrations } from './db';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 @Module({
   controllers: [],
   imports: [
@@ -19,6 +21,8 @@ import { migrations } from './db';
       useFactory: (config: ConfigService) => buildLoggerOptions(config),
       inject: [ConfigService],
     }),
+    AuthModule,
+    UserModule,
   ],
   providers: [
     // Global Pipes

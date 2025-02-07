@@ -3,6 +3,7 @@ import { BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as bcrypt from 'bcrypt';
+import { ERRORS } from '~/common/constants';
 import { UserService } from '~/user/services';
 import { LOGIN_REQUEST_MOCK, REGISTER_REQUEST_MOCK, TOKEN_MOCK, USER_MOCK } from '../__testing__/mocks';
 import { AuthService } from '../services/auth.service';
@@ -48,7 +49,7 @@ describe('AuthService', () => {
       userService.findByEmail.mockResolvedValue(USER_MOCK); // User exists
 
       await expect(authService.register(REGISTER_REQUEST_MOCK)).rejects.toThrow(
-        new BadRequestException('User with this email already exists'),
+        new BadRequestException(ERRORS.USER_ALREADY_EXISTS),
       );
 
       expect(userService.findByEmail).toHaveBeenCalledWith(REGISTER_REQUEST_MOCK.email);
@@ -75,7 +76,7 @@ describe('AuthService', () => {
       userService.findByEmail.mockResolvedValue(null);
 
       await expect(authService.login(LOGIN_REQUEST_MOCK)).rejects.toThrow(
-        new UnauthorizedException('Invalid email or password'),
+        new UnauthorizedException(ERRORS.INVALID_EMAIL_OR_PASSWORD),
       );
       expect(userService.findByEmail).toHaveBeenCalledWith(LOGIN_REQUEST_MOCK.email);
     });
@@ -86,7 +87,7 @@ describe('AuthService', () => {
       (bcrypt.compare as jest.Mock).mockResolvedValue(false); // Invalid password
 
       await expect(authService.login(LOGIN_REQUEST_MOCK)).rejects.toThrow(
-        new UnauthorizedException('Invalid email or password'),
+        new UnauthorizedException(ERRORS.INVALID_EMAIL_OR_PASSWORD),
       );
 
       expect(userService.findByEmail).toHaveBeenCalledWith(LOGIN_REQUEST_MOCK.email);

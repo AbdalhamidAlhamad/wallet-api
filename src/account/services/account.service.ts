@@ -38,8 +38,8 @@ export class AccountService {
       account.balance = new Decimal(account.balance).plus(amount).toNumber();
 
       await Promise.all([
-        await transactionalEntityManager.save(Account, account),
-        await transactionalEntityManager.save(Transaction, {
+        transactionalEntityManager.save(Account, account),
+        transactionalEntityManager.save(Transaction, {
           accountId: account.id,
           amount,
           type: TransactionType.TOP_UP,
@@ -68,8 +68,8 @@ export class AccountService {
       account.balance = new Decimal(account.balance).minus(amount).toNumber();
 
       await Promise.all([
-        await transactionalEntityManager.save(Account, account),
-        await transactionalEntityManager.save(Transaction, {
+        transactionalEntityManager.save(Account, account),
+        transactionalEntityManager.save(Transaction, {
           accountId: account.id,
           amount,
           type: TransactionType.CHARGE,

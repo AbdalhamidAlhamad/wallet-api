@@ -34,7 +34,8 @@ npm install
 ```sh
 npm start
 ```
-This command will set up the Nest.js application and the sqllite database. It will also run any necessary database migrations.
+This command will set up the Nest.js application and the sqllite database.
+It will also run any necessary database migrations, and create the sqlite database at the root project directory.
 
 ### 4. Once the application is running, you can access the Swagger API Documentation at:
 

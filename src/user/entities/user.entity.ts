@@ -28,7 +28,7 @@ export class User extends BaseEntity {
   @Column({ type: 'varchar', length: 255, name: 'password' })
   password!: string;
 
-  @OneToOne(() => Account, (account) => account.user)
+  @OneToOne(() => Account, (account) => account.user, { cascade: true })
   account!: Account;
 
   @UpdateDateColumn({ type: 'datetime', name: 'updated_at', default: () => 'CURRENT_TIMESTAMP' })

@@ -24,7 +24,7 @@ describe('buildTypeormOptions', () => {
     expect(configService.getOrThrow).toHaveBeenCalledWith('MIGRATIONS_RUN');
     expect(result).toEqual({
       type: 'sqlite',
-      database: 'db-test.sqlite',
+      database: ':memory:',
       logging: false,
       synchronize: false,
       migrationsRun: false,

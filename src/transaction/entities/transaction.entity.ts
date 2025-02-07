@@ -16,7 +16,7 @@ export class Transaction extends BaseEntity {
   @Column({ name: 'account_id', type: 'uuid' })
   accountId!: string;
 
-  @ManyToOne(() => Account, (account) => account.transactions)
+  @ManyToOne(() => Account, (account) => account.transactions, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'account_id' })
   account!: Account;
 

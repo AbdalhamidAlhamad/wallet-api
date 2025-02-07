@@ -1,6 +1,5 @@
 import { NestFactory } from '@nestjs/core';
 import { DataSource } from 'typeorm';
-import { initializeTransactionalContext } from 'typeorm-transactional';
 import { AppModule } from './src/app.module';
 
 /**
@@ -10,7 +9,6 @@ import { AppModule } from './src/app.module';
 async function getTypeOrmDataSource() {
   process.env.MIGRATIONS_RUN = 'false';
 
-  initializeTransactionalContext();
   const app = await NestFactory.createApplicationContext(AppModule);
 
   const dataSource = app.get(DataSource);

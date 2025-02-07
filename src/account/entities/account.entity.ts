@@ -19,11 +19,11 @@ export class Account extends BaseEntity {
   @Column({ name: 'user_id', type: 'uuid' })
   userId!: string;
 
-  @OneToOne(() => User, (user) => user.account)
+  @OneToOne(() => User, (user) => user.account, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
   user!: User;
 
-  @OneToMany(() => Transaction, (transaction) => transaction.account)
+  @OneToMany(() => Transaction, (transaction) => transaction.account, { cascade: true })
   transactions!: Transaction[];
 
   @Column({ name: 'created_at', type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })

@@ -3,15 +3,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_PIPE } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from 'nestjs-pino';
-import { DataSource } from 'typeorm';
-import { addTransactionalDataSource } from 'typeorm-transactional';
 import { AccountModule } from './account/account.module';
 import { AuthModule } from './auth/auth.module';
 import { buildConfigOptions, buildLoggerOptions, buildTypeormOptions } from './core/module-options';
 import { buildValidationPipe } from './core/pipes';
 import { migrations } from './db';
-import { UserModule } from './user/user.module';
 import { TransactionModule } from './transaction/transaction.module';
+import { UserModule } from './user/user.module';
 @Module({
   controllers: [],
   imports: [
@@ -20,13 +18,6 @@ import { TransactionModule } from './transaction/transaction.module';
       imports: [],
       inject: [ConfigService],
       useFactory: (config: ConfigService) => buildTypeormOptions(config, migrations),
-      async dataSourceFactory(options) {
-        if (!options) {
-          throw new Error('Invalid options passed');
-        }
-
-        return addTransactionalDataSource(new DataSource(options));
-      },
     }),
     LoggerModule.forRootAsync({
       useFactory: (config: ConfigService) => buildLoggerOptions(config),

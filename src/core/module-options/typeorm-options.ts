@@ -8,7 +8,7 @@ export function buildTypeormOptions(
 ): TypeOrmModuleOptions {
   return {
     type: 'sqlite',
-    database: config.getOrThrow<string>('NODE_ENV') === Environment.TEST ? 'db-test.sqlite' : 'db.sqlite',
+    database: config.getOrThrow<string>('NODE_ENV') === Environment.TEST ? ':memory:' : 'db.sqlite',
     logging: config.getOrThrow<string>('NODE_ENV') === Environment.DEV,
     synchronize: false,
     migrationsRun: config.getOrThrow<string>('MIGRATIONS_RUN') === 'true',

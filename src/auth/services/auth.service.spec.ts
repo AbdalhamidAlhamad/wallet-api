@@ -75,7 +75,7 @@ describe('AuthService', () => {
       userService.findByEmail.mockResolvedValue(null);
 
       await expect(authService.login(LOGIN_REQUEST_MOCK)).rejects.toThrow(
-        new UnauthorizedException('Invalid password'),
+        new UnauthorizedException('Invalid email or password'),
       );
       expect(userService.findByEmail).toHaveBeenCalledWith(LOGIN_REQUEST_MOCK.email);
     });
@@ -86,7 +86,7 @@ describe('AuthService', () => {
       (bcrypt.compare as jest.Mock).mockResolvedValue(false); // Invalid password
 
       await expect(authService.login(LOGIN_REQUEST_MOCK)).rejects.toThrow(
-        new UnauthorizedException('Invalid password'),
+        new UnauthorizedException('Invalid email or password'),
       );
 
       expect(userService.findByEmail).toHaveBeenCalledWith(LOGIN_REQUEST_MOCK.email);

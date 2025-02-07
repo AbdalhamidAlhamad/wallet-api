@@ -1,4 +1,14 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  Index,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Account } from '~/account/entities';
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -17,6 +27,9 @@ export class User extends BaseEntity {
 
   @Column({ type: 'varchar', length: 255, name: 'password' })
   password!: string;
+
+  @OneToOne(() => Account, (account) => account.user)
+  account!: Account;
 
   @UpdateDateColumn({ type: 'datetime', name: 'updated_at', default: () => 'CURRENT_TIMESTAMP' })
   updatedAt!: Date;

@@ -1,5 +1,7 @@
 import { BadRequestException, Injectable, UnprocessableEntityException } from '@nestjs/common';
 import Decimal from 'decimal.js';
+import { Transaction } from '~/transaction/entities';
+import { TransactionType } from '~/transaction/enums';
 import { ChargeRequestDto, TopUpRequestDto } from '../dtos/request';
 import { Account } from '../entities';
 import { AccountRepository } from '../repositories';
@@ -35,9 +37,14 @@ export class AccountService {
 
       account.balance = new Decimal(account.balance).plus(amount).toNumber();
 
-      await transactionalEntityManager.save(account);
-
-      //@TODO - Add transaction
+      await Promise.all([
+        await transactionalEntityManager.save(Account, account),
+        await transactionalEntityManager.save(Transaction, {
+          accountId: account.id,
+          amount,
+          type: TransactionType.TOP_UP,
+        }),
+      ]);
 
       return account;
     });
@@ -59,9 +66,15 @@ export class AccountService {
       }
 
       account.balance = new Decimal(account.balance).minus(amount).toNumber();
-      await transactionalEntityManager.save(account);
 
-      //@TODO - Add transaction
+      await Promise.all([
+        await transactionalEntityManager.save(Account, account),
+        await transactionalEntityManager.save(Transaction, {
+          accountId: account.id,
+          amount,
+          type: TransactionType.CHARGE,
+        }),
+      ]);
 
       return account;
     });

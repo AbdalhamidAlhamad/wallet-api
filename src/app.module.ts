@@ -11,6 +11,7 @@ import { buildConfigOptions, buildLoggerOptions, buildTypeormOptions } from './c
 import { buildValidationPipe } from './core/pipes';
 import { migrations } from './db';
 import { UserModule } from './user/user.module';
+import { TransactionModule } from './transaction/transaction.module';
 @Module({
   controllers: [],
   imports: [
@@ -34,6 +35,7 @@ import { UserModule } from './user/user.module';
     AuthModule,
     UserModule,
     AccountModule,
+    TransactionModule,
   ],
   providers: [
     // Global Pipes

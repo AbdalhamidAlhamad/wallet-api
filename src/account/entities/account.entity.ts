@@ -1,4 +1,5 @@
-import { BaseEntity, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Transaction } from '~/transaction/entities';
 import { User } from '~/user/entities';
 
 @Entity('accounts')
@@ -21,6 +22,9 @@ export class Account extends BaseEntity {
   @OneToOne(() => User, (user) => user.account)
   @JoinColumn({ name: 'user_id' })
   user!: User;
+
+  @OneToMany(() => Transaction, (transaction) => transaction.account)
+  transactions!: Transaction[];
 
   @Column({ name: 'created_at', type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
   createdAt!: Date;

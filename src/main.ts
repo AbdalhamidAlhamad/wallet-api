@@ -18,7 +18,6 @@ async function bootstrap() {
   if (config.getOrThrow<string>('NODE_ENV') === 'dev') {
     SwaggerModule.setup(config.getOrThrow<string>('SWAGGER_API_DOCS_PATH'), app, swaggerDocument, {
       swaggerOptions: {
-        tagsSorter: 'alpha',
         docExpansion: 'none',
       },
     });

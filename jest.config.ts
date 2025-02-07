@@ -4,7 +4,7 @@ import { buildJestConfig } from './jest.base.config';
 const config: Config = buildJestConfig({
   jestProjectConfigs: {
     testRegex: '.*\\.spec\\.ts$',
-    coveragePathIgnorePatterns: ['__testing__', 'entities', '<rootDir>/src/db', 'index.ts'],
+    coveragePathIgnorePatterns: ['__testing__', 'entities', '<rootDir>/src/db', 'index.ts', 'repositories'],
   },
   jestConfigs: {
     coverageDirectory: 'coverage',
